@@ -20,10 +20,21 @@ const EditQualityPage = () => {
         fetchData();
     }, []);
 
-    const handleSubmit = (data) => {
-        axios
-            .put(qualityEndPoint, data)
-            .then((res) => console.log(res.data.content));
+    const handleSubmit = async (data) => {
+        try {
+            await axios.put(qualityEndPoint, data);
+            // .then((res) => console.log(res.data.content));
+        } catch (error) {
+            const expectedError =
+                error.response &&
+                error.response.status >= 400 &&
+                error.response.status < 500;
+            if (!expectedError) {
+                console.log("unexpected");
+            } else {
+                console.log("expected");
+            }
+        }
     };
 
     return (
