@@ -3,6 +3,20 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EditForm from "../components/ui/editForm";
 
+axios.interceptors.response.use(
+    (res) => res,
+    function (error) {
+        const expectedError =
+            error.response &&
+            error.response.status >= 400 &&
+            error.response.status < 500;
+        if (!expectedError) {
+            console.log("unexpected");
+        }
+        return Promise.reject(error);
+    },
+);
+
 const EditQualityPage = () => {
     const { id } = useParams();
     const [quality, setQuality] = useState(null);
@@ -25,15 +39,9 @@ const EditQualityPage = () => {
             await axios.put(qualityEndPoint, data);
             // .then((res) => console.log(res.data.content));
         } catch (error) {
-            const expectedError =
-                error.response &&
-                error.response.status >= 400 &&
-                error.response.status < 500;
-            if (!expectedError) {
-                console.log("unexpected");
-            } else {
-                console.log("expected");
-            }
+            //  else {
+            console.log("expected");
+            // }
         }
     };
 
