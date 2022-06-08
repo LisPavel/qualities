@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Container from "./components/common/container";
 import NavBar from "./components/ui/NavBar";
-import { QualitiesProvider, useQualities } from "./hooks/useQualities";
+import { QualitiesProvider } from "./hooks/useQualities";
 import routes from "./routes";
 
 const getRoutes = (routes) => {

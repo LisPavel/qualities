@@ -8,7 +8,6 @@ const QualitiesListPage = () => {
 
     const { qualities } = useQualities();
     const handleEdit = (param) => {
-        console.log(param);
         history.push(`/edit/${param}`);
     };
     const handleDelete = (param) => {
