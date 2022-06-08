@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import QualitiesTable from "../components/ui/qualitiesTable";
-import httpService from "../services/httpService";
+import qualityService from "../services/qualityService";
 
 const QualitiesListPage = () => {
     const history = useHistory();
@@ -9,15 +9,7 @@ const QualitiesListPage = () => {
     const [qualities, setQualities] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data } = await httpService.get("quality");
-                setQualities(data.content);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData();
+        qualityService.fetchAll().then((data) => setQualities(data.content));
     }, []);
 
     const handleEdit = (param) => {
