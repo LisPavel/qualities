@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import qualityService from "../services/qualityService";
 
 const QualitiesContext = React.createContext();
@@ -6,8 +7,7 @@ const QualitiesContext = React.createContext();
 export const QualitiesProvider = ({ children }) => {
     const [qualities, setQualities] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [, setError] = useState(null);
-    const prevState = useRef;
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const getQualities = async () => {
@@ -15,14 +15,20 @@ export const QualitiesProvider = ({ children }) => {
                 const { content } = await qualityService.fetchAll();
                 setQualities(content);
             } catch (error) {
-                const { message } = error.response.data;
-                setError(message);
+                errorCatcher(error);
             } finally {
                 setIsLoading(false);
             }
         };
         getQualities();
     }, []);
+
+    useEffect(() => {
+        if (error != null) {
+            toast.error(error);
+            setError(null);
+        }
+    }, [error]);
 
     const getQuality = (id) => {
         return qualities.find((q) => q._id === id);
@@ -37,8 +43,7 @@ export const QualitiesProvider = ({ children }) => {
 
             return content;
         } catch (error) {
-            const { message } = error.response.data;
-            setError(message);
+            errorCatcher(error);
         }
     };
 
@@ -49,22 +54,26 @@ export const QualitiesProvider = ({ children }) => {
 
             return content;
         } catch (error) {
-            const { message } = error.response.data;
-            setError(message);
+            errorCatcher(error);
         }
     };
 
     const deleteQuality = async (id) => {
-        prevState.current = qualities;
-        setQualities((prevState) => prevState.filter((q) => q._id !== id));
         try {
-            await qualityService.delete(id);
+            const { content } = await qualityService.delete(id);
+            setQualities((prevState) =>
+                prevState.filter((q) => q._id !== content._id),
+            );
+            return content;
         } catch (error) {
-            const { message } = error.response.data;
-            setError(message);
-            setQualities(prevState.current);
+            errorCatcher(error);
         }
     };
+
+    function errorCatcher(error) {
+        const { message } = error.response.data;
+        setError(message);
+    }
 
     return (
         <QualitiesContext.Provider
