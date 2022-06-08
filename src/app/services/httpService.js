@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 
 axios.interceptors.response.use(
     (res) => res,
@@ -9,6 +10,7 @@ axios.interceptors.response.use(
             error.response.status < 500;
         if (!expectedError) {
             console.log("unexpected");
+            Sentry.captureException(error);
         }
         return Promise.reject(error);
     },

@@ -11,12 +11,12 @@ const getRoutes = (routes) => {
 
 function App() {
     return (
-        <div className='App'>
+        <div className="App">
             <NavBar routes={routes} />
             <Container>
                 <Switch>
                     {getRoutes(routes)}
-                    <Redirect to='/' />
+                    <Redirect to="/" />
                 </Switch>
             </Container>
         </div>
