@@ -29,7 +29,7 @@ const EditQualityPage = () => {
 
     useEffect(() => {
         getQuality(id).then((data) => setQuality(data.content));
-    }, []);
+    }, [id]);
 
     const handleSubmit = async (data) => {
         updateQuality(id, data);
