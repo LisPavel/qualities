@@ -1,8 +1,10 @@
 import React from "react";
 import QualityForm from "../components/ui/qualityForm";
+import { useQualities } from "../hooks/useQualities";
 const AddQualityPage = () => {
+    const { addQuality } = useQualities();
     const handleSubmit = (data) => {
-        console.log(data);
+        addQuality(data);
     };
     return (
         <>
