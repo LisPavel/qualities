@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as Sentry from "@sentry/react";
+import logger from "./logService";
 
 axios.interceptors.response.use(
     (res) => res,
@@ -10,7 +10,7 @@ axios.interceptors.response.use(
             error.response.status < 500;
         if (!expectedError) {
             console.log("unexpected");
-            Sentry.captureException(error);
+            logger.log(error);
         }
         return Promise.reject(error);
     },
