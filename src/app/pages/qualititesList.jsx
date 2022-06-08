@@ -11,9 +11,7 @@ const QualitiesListPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await httpService.get(
-                    "http://localhost:4000/api/v1/quality",
-                );
+                const { data } = await httpService.get("quality");
                 setQualities(data.content);
             } catch (error) {
                 console.error(error);

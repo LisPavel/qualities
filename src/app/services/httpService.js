@@ -2,6 +2,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import logger from "./logService";
 
+import config from "../config.json";
+
+axios.defaults.baseURL = config.apiEndPoint;
+
 axios.interceptors.response.use(
     (res) => res,
     function (error) {

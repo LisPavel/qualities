@@ -6,7 +6,7 @@ import httpService from "../services/httpService";
 const EditQualityPage = () => {
     const { id } = useParams();
     const [quality, setQuality] = useState(null);
-    const qualityEndPoint = `http://localhost:4000/api/v1/quality/${id}`;
+    const qualityEndPoint = `quality/${id}`;
 
     useEffect(() => {
         const fetchData = async () => {
